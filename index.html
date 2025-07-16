@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Hub - All Your Calculation Needs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6b9ac4;
+            --accent: #e63946;
+            --accent2: #2a9d8f;
+            --light: #f1faee;
+            --dark: #1d3557;
+            --darker: #14213d;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #a8dadc;
+        }
+        
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 10px;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .tab.active {
+            background: var(--accent);
+            font-weight: bold;
+        }
+        
+        .tab i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .calculator-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .calculator-title i {
+            margin-right: 12px;
+            color: var(--accent2);
+        }
+        
+        .input-group {
+            margin-bottom: 18px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #a8dadc;
+        }
+        
+        .input-group input, 
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            color: var(--dark);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .calculate-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calculate-btn i {
+            margin-right: 10px;
+        }
+        
+        .calculate-btn:hover {
+            background: #d62828;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+        
+        .result-container {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            border-left: 4px solid var(--accent2);
+        }
+        
+        .result-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #a8dadc;
+        }
+        
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 10px 0;
+        }
+        
+        .result-description {
+            margin-top: 10px;
+            font-style: italic;
+            opacity: 0.8;
+            color: #a8dadc;
+        }
+        
+        .calculator-info {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #a8dadc;
+        }
+        
+        .calculator-info h3 {
+            margin-bottom: 10px;
+            color: #a8dadc;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .deploy-note {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            color: #a8dadc;
+        }
+        
+        .deploy-note a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .deploy-note a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 900px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs-container {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 15px;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .input-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <h1>Calculator Hub</h1>
+            <p class="subtitle">Your one-stop solution for all calculation needs. Select from a variety of specialized calculators below.</p>
+        </header>
+        
+        <div class="tabs-container">
+            <div class="tab active" data-category="all">
+                <i class="fas fa-star"></i> All Calculators
+            </div>
+            <div class="tab" data-category="education">
+                <i class="fas fa-graduation-cap"></i> Education
+            </div>
+            <div class="tab" data-category="health">
+                <i class="fas fa-heartbeat"></i> Health
+            </div>
+            <div class="tab" data-category="sports">
+                <i class="fas fa-running"></i> Sports
+            </div>
+            <div class="tab" data-category="games">
+                <i class="fas fa-gamepad"></i> Games
+            </div>
+            <div class="tab" data-category="other">
+                <i class="fas fa-ellipsis-h"></i> Other
+            </div>
+        </div>
+        
+        <div class="calculator-grid">
+            <!-- ACT Score Calculator -->
+            <div class="calculator-card" data-categories="education">
+                <h2 class="calculator-title"><i class="fas fa-pencil-alt"></i> ACT Score Calculator</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="english">English Score</label>
+                        <input type="number" id="english" min="1" max="36" placeholder="1-36" value="24">
+                    </div>
+                    <div class="input-group">
+                        <label for="math">Math Score</label>
+                        <input type="number" id="math" min="1" max="36" placeholder="1-36" value="26">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="reading">Reading Score</label>
+                        <input type="number" id="reading" min="1" max="36" placeholder="1-36" value="28">
+                    </div>
+                    <div class="input-group">
+                        <label for="science">Science Score</label>
+                        <input type="number" id="science" min="1" max="36" placeholder="1-36" value="25">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateACT()">
+                    <i class="fas fa-calculator"></i> Calculate Composite Score
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Your ACT Composite Score</div>
+                    <div class="result-value" id="act-result">-</div>
+                    <div class="result-description" id="act-description"></div>
+                </div>
+            </div>
+            
+            <!-- AP Biology Score Calculator -->
+            <div class="calculator-card" data-categories="education">
+                <h2 class="calculator-title"><i class="fas fa-dna"></i> AP Biology Score Calculator</h2>
+                <div class="input-group">
+                    <label for="mcq">Multiple Choice Raw Score</label>
+                    <input type="number" id="mcq" min="0" max="60" placeholder="0-60" value="42">
+                </div>
+                <div class="input-group">
+                    <label for="frq">Free Response Raw Score</label>
+                    <input type="number" id="frq" min="0" max="30" placeholder="0-30" value="22">
+                </div>
+                <button class="calculate-btn" onclick="calculateAPBio()">
+                    <i class="fas fa-calculator"></i> Calculate AP Score
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Your Predicted AP Score</div>
+                    <div class="result-value" id="apbio-result">-</div>
+                    <div class="result-description" id="apbio-description"></div>
+                </div>
+            </div>
+            
+            <!-- AP Chemistry Score Calculator -->
+            <div class="calculator-card" data-categories="education">
+                <h2 class="calculator-title"><i class="fas fa-flask"></i> AP Chemistry Score Calculator</h2>
+                <div class="input-group">
+                    <label for="apchem-mcq">Multiple Choice Raw Score</label>
+                    <input type="number" id="apchem-mcq" min="0" max="60" placeholder="0-60" value="40">
+                </div>
+                <div class="input-group">
+                    <label for="apchem-frq">Free Response Raw Score</label>
+                    <input type="number" id="apchem-frq" min="0" max="40" placeholder="0-40" value="25">
+                </div>
+                <button class="calculate-btn" onclick="calculateAPChem()">
+                    <i class="fas fa-calculator"></i> Calculate AP Score
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Your Predicted AP Score</div>
+                    <div class="result-value" id="apchem-result">-</div>
+                    <div class="result-description" id="apchem-description"></div>
+                </div>
+            </div>
+            
+            <!-- Blooket Calculator -->
+            <div class="calculator-card" data-categories="games">
+                <h2 class="calculator-title"><i class="fas fa-gamepad"></i> Blooket Calculator</h2>
+                <div class="input-group">
+                    <label for="blooket-points">Points per Question</label>
+                    <input type="number" id="blooket-points" min="1" value="100">
+                </div>
+                <div class="input-group">
+                    <label for="blooket-questions">Number of Questions</label>
+                    <input type="number" id="blooket-questions" min="1" value="20">
+                </div>
+                <div class="input-group">
+                    <label for="blooket-multiplier">Multiplier</label>
+                    <select id="blooket-multiplier">
+                        <option value="1">1x</option>
+                        <option value="2">2x</option>
+                        <option value="3">3x</option>
+                        <option value="4">4x</option>
+                    </select>
+                </div>
+                <button class="calculate-btn" onclick="calculateBlooket()">
+                    <i class="fas fa-calculator"></i> Calculate Total Points
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Total Points</div>
+                    <div class="result-value" id="blooket-result">-</div>
+                    <div class="result-description" id="blooket-description"></div>
+                </div>
+            </div>
+            
+            <!-- Prostate Volume Calculator -->
+            <div class="calculator-card" data-categories="health">
+                <h2 class="calculator-title"><i class="fas fa-heartbeat"></i> Prostate Volume Calculator</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="prostate-width">Width (cm)</label>
+                        <input type="number" id="prostate-width" min="0.1" step="0.1" value="4.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="prostate-height">Height (cm)</label>
+                        <input type="number" id="prostate-height" min="0.1" step="0.1" value="3.0">
+                    </div>
+                    <div class="input-group">
+                        <label for="prostate-length">Length (cm)</label>
+                        <input type="number" id="prostate-length" min="0.1" step="0.1" value="4.0">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateProstate()">
+                    <i class="fas fa-calculator"></i> Calculate Volume
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Prostate Volume</div>
+                    <div class="result-value" id="prostate-result">-</div>
+                    <div class="result-description" id="prostate-description"></div>
+                </div>
+            </div>
+            
+            <!-- Dunk Calculator -->
+            <div class="calculator-card" data-categories="sports">
+                <h2 class="calculator-title"><i class="fas fa-basketball-ball"></i> Dunk Calculator</h2>
+                <div class="input-group">
+                    <label for="dunk-height">Your Height (cm)</label>
+                    <input type="number" id="dunk-height" min="100" value="180">
+                </div>
+                <div class="input-group">
+                    <label for="dunk-vert">Vertical Jump (cm)</label>
+                    <input type="number" id="dunk-vert" min="0" value="70">
+                </div>
+                <div class="input-group">
+                    <label for="dunk-rim">Rim Height (cm)</label>
+                    <input type="number" id="dunk-rim" min="0" value="305">
+                </div>
+                <button class="calculate-btn" onclick="calculateDunk()">
+                    <i class="fas fa-calculator"></i> Calculate Dunk Ability
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Dunk Result</div>
+                    <div class="result-value" id="dunk-result">-</div>
+                    <div class="result-description" id="dunk-description"></div>
+                </div>
+            </div>
+            
+            <!-- Persona 3 Fusion Calculator -->
+            <div class="calculator-card" data-categories="games">
+                <h2 class="calculator-title"><i class="fas fa-mask"></i> Persona 3 Fusion Calculator</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="persona1">Persona 1</label>
+                        <select id="persona1">
+                            <option value="orpheus">Orpheus</option>
+                            <option value="thanatos">Thanatos</option>
+                            <option value="messiah">Messiah</option>
+                            <option value="jackfrost">Jack Frost</option>
+                            <option value="pyrojack">Pyro Jack</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="persona2">Persona 2</label>
+                        <select id="persona2">
+                            <option value="orpheus">Orpheus</option>
+                            <option value="thanatos">Thanatos</option>
+                            <option value="messiah">Messiah</option>
+                            <option value="jackfrost">Jack Frost</option>
+                            <option value="pyrojack">Pyro Jack</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculatePersona()">
+                    <i class="fas fa-calculator"></i> Fuse Personas
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Fusion Result</div>
+                    <div class="result-value" id="persona-result">-</div>
+                    <div class="result-description" id="persona-description"></div>
+                </div>
+            </div>
+            
+            <!-- Schedule 1 Mixing Calculator -->
+            <div class="calculator-card" data-categories="other">
+                <h2 class="calculator-title"><i class="fas fa-vial"></i> Schedule 1 Mixing Calculator</h2>
+                <div class="input-group">
+                    <label for="substance1">Substance 1 (grams)</label>
+                    <input type="number" id="substance1" min="0" value="10">
+                </div>
+                <div class="input-group">
+                    <label for="substance2">Substance 2 (grams)</label>
+                    <input type="number" id="substance2" min="0" value="5">
+                </div>
+                <div class="input-group">
+                    <label for="ratio">Desired Ratio (e.g., 1:2)</label>
+                    <input type="text" id="ratio" value="1:1">
+                </div>
+                <button class="calculate-btn" onclick="calculateSchedule()">
+                    <i class="fas fa-calculator"></i> Calculate Mixture
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Mixing Result</div>
+                    <div class="result-value" id="schedule-result">-</div>
+                    <div class="result-description" id="schedule-description"></div>
+                </div>
+            </div>
+            
+            <!-- Snowday Calculator -->
+            <div class="calculator-card" data-categories="other">
+                <h2 class="calculator-title"><i class="fas fa-snowflake"></i> Snowday Calculator</h2>
+                <div class="input-group">
+                    <label for="snowfall">Snowfall Amount (inches)</label>
+                    <input type="number" id="snowfall" min="0" value="6">
+                </div>
+                <div class="input-group">
+                    <label for="temperature">Temperature (°F)</label>
+                    <input type="number" id="temperature" value="20">
+                </div>
+                <div class="input-group">
+                    <label for="wind">Wind Speed (mph)</label>
+                    <input type="number" id="wind" min="0" value="15">
+                </div>
+                <button class="calculate-btn" onclick="calculateSnowday()">
+                    <i class="fas fa-calculator"></i> Calculate Chance of Snowday
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Chance of Snowday</div>
+                    <div class="result-value" id="snowday-result">-</div>
+                    <div class="result-description" id="snowday-description"></div>
+                </div>
+            </div>
+            
+            <!-- VDOT Calculator -->
+            <div class="calculator-card" data-categories="sports">
+                <h2 class="calculator-title"><i class="fas fa-running"></i> VDOT Running Calculator</h2>
+                <div class="input-group">
+                    <label for="distance">Distance</label>
+                    <select id="distance">
+                        <option value="5k">5K (3.1 miles)</option>
+                        <option value="10k">10K (6.2 miles)</option>
+                        <option value="half">Half Marathon (13.1 miles)</option>
+                        <option value="marathon">Marathon (26.2 miles)</option>
+                    </select>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="hours">Hours</label>
+                        <input type="number" id="hours" min="0" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="minutes">Minutes</label>
+                        <input type="number" id="minutes" min="0" max="59" value="25">
+                    </div>
+                    <div class="input-group">
+                        <label for="seconds">Seconds</label>
+                        <input type="number" id="seconds" min="0" max="59" value="0">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateVDOT()">
+                    <i class="fas fa-calculator"></i> Calculate VDOT
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Your VDOT Score</div>
+                    <div class="result-value" id="vdot-result">-</div>
+                    <div class="result-description" id="vdot-description"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="deploy-note">
+            <h3>Deploy this on Vercel</h3>
+            <p>This website is ready for deployment on Vercel. Simply create a new project and push this HTML file to your repository.</p>
+            <p>Vercel will automatically detect it as a static site and deploy it.</p>
+            <p>Get started at <a href="https://vercel.com" target="_blank">vercel.com</a></p>
+        </div>
+        
+        <footer>
+            <p>Calculator Hub &copy; 2023 | All calculators are for educational purposes only</p>
+            <p>Results may vary and should be verified with official sources</p>
+        </footer>
+    </div>
+
+    <script>
+        // Calculator selection
+        const tabs = document.querySelectorAll('.tab');
+        const calculatorCards = document.querySelectorAll('.calculator-card');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                const category = tab.getAttribute('data-category');
+                
+                // Show/hide calculators based on category
+                calculatorCards.forEach(card => {
+                    if (category === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        const categories = card.getAttribute('data-categories');
+                        if (categories.includes(category)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+        
+        // ACT Calculator
+        function calculateACT() {
+            const english = parseInt(document.getElementById('english').value) || 0;
+            const math = parseInt(document.getElementById('math').value) || 0;
+            const reading = parseInt(document.getElementById('reading').value) || 0;
+            const science = parseInt(document.getElementById('science').value) || 0;
+            
+            // Validate inputs
+            if (english < 1 || english > 36 || 
+                math < 1 || math > 36 || 
+                reading < 1 || reading > 36 || 
+                science < 1 || science > 36) {
+                document.getElementById('act-result').textContent = 'Invalid';
+                document.getElementById('act-description').textContent = 'All scores must be between 1 and 36';
+                return;
+            }
+            
+            // Calculate composite score (average rounded to nearest whole number)
+            const composite = Math.round((english + math + reading + science) / 4);
+            
+            // Determine description
+            let description = '';
+            if (composite >= 34) description = 'Excellent! You scored in the top 1% of test-takers.';
+            else if (composite >= 30) description = 'Great job! You scored in the top 10% of test-takers.';
+            else if (composite >= 24) description = 'Good score! Above the national average.';
+            else if (composite >= 20) description = 'Average score. Consider retaking for improvement.';
+            else description = 'Below average. Focus on areas for improvement.';
+            
+            // Display results
+            document.getElementById('act-result').textContent = composite;
+            document.getElementById('act-description').textContent = description;
+        }
+        
+        // AP Biology Calculator
+        function calculateAPBio() {
+            const mcq = parseInt(document.getElementById('mcq').value) || 0;
+            const frq = parseInt(document.getElementById('frq').value) || 0;
+            
+            // Validate inputs
+            if (mcq < 0 || mcq > 60 || frq < 0 || frq > 30) {
+                document.getElementById('apbio-result').textContent = 'Invalid';
+                document.getElementById('apbio-description').textContent = 'MCQ must be 0-60, FRQ must be 0-30';
+                return;
+            }
+            
+            // Calculate composite score (0-100)
+            const composite = (mcq * 1.25) + (frq * 1.6667); // Scaled to 100
+            
+            // Determine AP score
+            let apScore;
+            let description;
+            
+            if (composite >= 85) {
+                apScore = 5;
+                description = 'Extremely well qualified';
+            } else if (composite >= 70) {
+                apScore = 4;
+                description = 'Well qualified';
+            } else if (composite >= 55) {
+                apScore = 3;
+                description = 'Qualified';
+            } else if (composite >= 40) {
+                apScore = 2;
+                description = 'Possibly qualified';
+            } else {
+                apScore = 1;
+                description = 'No recommendation';
+            }
+            
+            // Display results
+            document.getElementById('apbio-result').textContent = apScore;
+            document.getElementById('apbio-description').textContent = description;
+        }
+        
+        // AP Chemistry Calculator
+        function calculateAPChem() {
+            const mcq = parseInt(document.getElementById('apchem-mcq').value) || 0;
+            const frq = parseInt(document.getElementById('apchem-frq').value) || 0;
+            
+            // Validate inputs
+            if (mcq < 0 || mcq > 60 || frq < 0 || frq > 40) {
+                document.getElementById('apchem-result').textContent = 'Invalid';
+                document.getElementById('apchem-description').textContent = 'MCQ must be 0-60, FRQ must be 0-40';
+                return;
+            }
+            
+            // Calculate composite score (0-100)
+            const composite = (mcq * 1.25) + (frq * 1.25); // Scaled to 100
+            
+            // Determine AP score
+            let apScore;
+            let description;
+            
+            if (composite >= 85) {
+                apScore = 5;
+                description = 'Extremely well qualified';
+            } else if (composite >= 70) {
+                apScore = 4;
+                description = 'Well qualified';
+            } else if (composite >= 55) {
+                apScore = 3;
+                description = 'Qualified';
+            } else if (composite >= 40) {
+                apScore = 2;
+                description = 'Possibly qualified';
+            } else {
+                apScore = 1;
+                description = 'No recommendation';
+            }
+            
+            // Display results
+            document.getElementById('apchem-result').textContent = apScore;
+            document.getElementById('apchem-description').textContent = description;
+        }
+        
+        // Blooket Calculator
+        function calculateBlooket() {
+            const points = parseInt(document.getElementById('blooket-points').value) || 0;
+            const questions = parseInt(document.getElementById('blooket-questions').value) || 0;
+            const multiplier = parseInt(document.getElementById('blooket-multiplier').value) || 1;
+            
+            if (points <= 0 || questions <= 0) {
+                document.getElementById('blooket-result').textContent = 'Invalid';
+                document.getElementById('blooket-description').textContent = 'Points and questions must be positive';
+                return;
+            }
+            
+            const total = points * questions * multiplier;
+            document.getElementById('blooket-result').textContent = total.toLocaleString();
+            document.getElementById('blooket-description').textContent = `Total points with ${multiplier}x multiplier`;
+        }
+        
+        // Prostate Volume Calculator
+        function calculateProstate() {
+            const width = parseFloat(document.getElementById('prostate-width').value) || 0;
+            const height = parseFloat(document.getElementById('prostate-height').value) || 0;
+            const length = parseFloat(document.getElementById('prostate-length').value) || 0;
+            
+            if (width <= 0 || height <= 0 || length <= 0) {
+                document.getElementById('prostate-result').textContent = 'Invalid';
+                document.getElementById('prostate-description').textContent = 'All dimensions must be positive';
+                return;
+            }
+            
+            // Volume = π/6 * width * height * length
+            const volume = (Math.PI / 6) * width * height * length;
+            document.getElementById('prostate-result').textContent = volume.toFixed(2) + ' cm³';
+            document.getElementById('prostate-description').textContent = 'Ellipsoid formula volume';
+        }
+        
+        // Dunk Calculator
+        function calculateDunk() {
+            const height = parseFloat(document.getElementById('dunk-height').value) || 0;
+            const vert = parseFloat(document.getElementById('dunk-vert').value) || 0;
+            const rim = parseFloat(document.getElementById('dunk-rim').value) || 0;
+            
+            if (height <= 0 || vert <= 0 || rim <= 0) {
+                document.getElementById('dunk-result').textContent = 'Invalid';
+                document.getElementById('dunk-description').textContent = 'All values must be positive';
+                return;
+            }
+            
+            // Calculate reach: average standing reach is about 1.3 times height (simplified)
+            const reach = height * 1.3;
+            const jumpHeight = reach + vert;
+            
+            let result, description;
+            if (jumpHeight >= rim) {
+                const above = (jumpHeight - rim).toFixed(1);
+                result = 'Yes!';
+                description = `You can dunk with ${above} cm to spare`;
+            } else {
+                const below = (rim - jumpHeight).toFixed(1);
+                result = 'No';
+                description = `You need ${below} cm more to dunk`;
+            }
+            
+            document.getElementById('dunk-result').textContent = result;
+            document.getElementById('dunk-description').textContent = description;
+        }
+        
+        // Persona 3 Fusion Calculator
+        function calculatePersona() {
+            const persona1 = document.getElementById('persona1').value;
+            const persona2 = document.getElementById('persona2').value;
+            
+            // Simplified fusion results
+            let result;
+            let description;
+            
+            if (persona1 === persona2) {
+                result = 'Same Persona';
+                description = 'Cannot fuse the same persona';
+            } else if ((persona1 === 'orpheus' && persona2 === 'thanatos') || 
+                      (persona1 === 'thanatos' && persona2 === 'orpheus')) {
+                result = 'Messiah';
+                description = 'Ultimate fusion!';
+            } else if ((persona1 === 'jackfrost' && persona2 === 'pyrojack') || 
+                      (persona1 === 'pyrojack' && persona2 === 'jackfrost')) {
+                result = 'King Frost';
+                description = 'Ice and fire combine!';
+            } else {
+                result = 'Random Persona';
+                description = 'Fusion result is random';
+            }
+            
+            document.getElementById('persona-result').textContent = result;
+            document.getElementById('persona-description').textContent = description;
+        }
+        
+        // Schedule 1 Mixing Calculator
+        function calculateSchedule() {
+            const substance1 = parseFloat(document.getElementById('substance1').value) || 0;
+            const substance2 = parseFloat(document.getElementById('substance2').value) || 0;
+            const ratio = document.getElementById('ratio').value;
+            
+            if (substance1 <= 0 || substance2 <= 0) {
+                document.getElementById('schedule-result').textContent = 'Invalid';
+                document.getElementById('schedule-description').textContent = 'Substance amounts must be positive';
+                return;
+            }
+            
+            // Parse ratio (e.g., "1:2")
+            const [r1, r2] = ratio.split(':').map(Number);
+            if (!r1 || !r2 || r1 <= 0 || r2 <= 0) {
+                document.getElementById('schedule-result').textContent = 'Invalid Ratio';
+                document.getElementById('schedule-description').textContent = 'Enter ratio in format like "1:2"';
+                return;
+            }
+            
+            // Calculate the ratio of the two substances
+            const currentRatio = substance1 / substance2;
+            const desiredRatio = r1 / r2;
+            
+            let result, description;
+            if (Math.abs(currentRatio - desiredRatio) < 0.05) {
+                result = 'Perfect Ratio';
+                description = `Your mixture is at the desired ratio of ${ratio}`;
+            } else if (currentRatio > desiredRatio) {
+                // Too much substance1, need to add substance2
+                const needed = (substance1 * r2 / r1) - substance2;
+                result = 'Adjust Substance 2';
+                description = `Add ${needed.toFixed(2)} grams of Substance 2`;
+            } else {
+                // Too much substance2, need to add substance1
+                const needed = (substance2 * r1 / r2) - substance1;
+                result = 'Adjust Substance 1';
+                description = `Add ${needed.toFixed(2)} grams of Substance 1`;
+            }
+            
+            document.getElementById('schedule-result').textContent = result;
+            document.getElementById('schedule-description').textContent = description;
+        }
+        
+        // Snowday Calculator
+        function calculateSnowday() {
+            const snowfall = parseFloat(document.getElementById('snowfall').value) || 0;
+            const temperature = parseFloat(document.getElementById('temperature').value) || 0;
+            const wind = parseFloat(document.getElementById('wind').value) || 0;
+            
+            // Simple scoring system
+            let score = 0;
+            
+            // Snowfall: 1 point per inch above 4
+            if (snowfall > 4) score += (snowfall - 4);
+            
+            // Temperature: 1 point for every 5 degrees below 32
+            if (temperature < 32) score += (32 - temperature) / 5;
+            
+            // Wind: 1 point for every 10 mph above 15
+            if (wind > 15) score += (wind - 15) / 10;
+            
+            // Cap score at 10
+            score = Math.min(score, 10);
+            
+            // Chance of snowday
+            const chance = Math.min(100, Math.round(score * 10));
+            
+            let description;
+            if (chance >= 80) description = 'Very likely snow day!';
+            else if (chance >= 60) description = 'Likely snow day';
+            else if (chance >= 40) description = 'Possible snow day';
+            else if (chance >= 20) description = 'Unlikely snow day';
+            else description = 'Very unlikely snow day';
+            
+            document.getElementById('snowday-result').textContent = chance + '%';
+            document.getElementById('snowday-description').textContent = description;
+        }
+        
+        // VDOT Calculator
+        function calculateVDOT() {
+            const distance = document.getElementById('distance').value;
+            const hours = parseInt(document.getElementById('hours').value) || 0;
+            const minutes = parseInt(document.getElementById('minutes').value) || 0;
+            const seconds = parseInt(document.getElementById('seconds').value) || 0;
+            
+            // Validate inputs
+            if (minutes > 59 || seconds > 59) {
+                document.getElementById('vdot-result').textContent = 'Invalid';
+                document.getElementById('vdot-description').textContent = 'Minutes and seconds must be less than 60';
+                return;
+            }
+            
+            // Convert time to minutes
+            const totalMinutes = (hours * 60) + minutes + (seconds / 60);
+            
+            // Base VDOT calculation (simplified for this example)
+            let vdot;
+            let description;
+            
+            // Distance in miles
+            let distMiles;
+            switch(distance) {
+                case '5k': distMiles = 3.1; break;
+                case '10k': distMiles = 6.2; break;
+                case 'half': distMiles = 13.1; break;
+                case 'marathon': distMiles = 26.2; break;
+                default: distMiles = 3.1;
+            }
+            
+            // Pace in minutes per mile
+            const pace = totalMinutes / distMiles;
+            
+            // Calculate VDOT (simplified formula for demonstration)
+            vdot = 160 / (pace + 2.5);
+            
+            // Round to one decimal
+            vdot = Math.round(vdot * 10) / 10;
+            
+            // Determine description
+            if (vdot > 70) description = 'Elite level performance!';
+            else if (vdot > 60) description = 'Advanced runner';
+            else if (vdot > 50) description = 'Intermediate runner';
+            else if (vdot > 40) description = 'Recreational runner';
+            else description = 'Beginner runner';
+            
+            // Display results
+            document.getElementById('vdot-result').textContent = vdot;
+            document.getElementById('vdot-description').textContent = description;
+        }
+        
+        // Initialize with default calculations
+        window.onload = function() {
+            calculateACT();
+            calculateAPBio();
+            calculateAPChem();
+            calculateBlooket();
+            calculateProstate();
+            calculateDunk();
+            calculatePersona();
+            calculateSchedule();
+            calculateSnowday();
+            calculateVDOT();
+        };
+    </script>
+</body>
+</html>
