@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator Hub - All Your Calculation Needs</title>
+    <title>Ultimate Calculator Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,13 +14,16 @@
         }
         
         :root {
-            --primary: #4a6fa5;
-            --secondary: #6b9ac4;
-            --accent: #e63946;
-            --accent2: #2a9d8f;
-            --light: #f1faee;
-            --dark: #1d3557;
-            --darker: #14213d;
+            --primary: #2563eb;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --accent2: #8b5cf6;
+            --accent3: #e63946;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --darker: #020617;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
         }
         
         body {
@@ -28,6 +31,7 @@
             color: var(--light);
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
         
         .container {
@@ -37,29 +41,38 @@
         
         header {
             text-align: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
+            padding: 20px 0 30px;
+            margin-bottom: 20px;
             position: relative;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
         }
         
         .logo {
             width: 80px;
             height: 80px;
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 15px;
             font-size: 2.5rem;
             color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 10px;
             color: white;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .subtitle {
@@ -67,7 +80,7 @@
             opacity: 0.9;
             max-width: 800px;
             margin: 0 auto;
-            color: #a8dadc;
+            color: #cbd5e1;
         }
         
         .tabs-container {
@@ -77,6 +90,8 @@
             justify-content: center;
             margin-bottom: 30px;
             padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
         }
         
         .tab {
@@ -87,7 +102,8 @@
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--card-border);
+            font-weight: 500;
         }
         
         .tab:hover {
@@ -113,18 +129,19 @@
         }
         
         .calculator-card {
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--card-bg);
             border-radius: 15px;
             padding: 25px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--card-border);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .calculator-card:hover {
             transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
         }
         
         .calculator-title {
@@ -133,11 +150,20 @@
             color: white;
             display: flex;
             align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
         }
         
         .calculator-title i {
             margin-right: 12px;
-            color: var(--accent2);
+            color: var(--accent);
+            background: rgba(16, 185, 129, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .input-group {
@@ -148,7 +174,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: #a8dadc;
+            color: #94a3b8;
         }
         
         .input-group input, 
@@ -160,6 +186,7 @@
             background: rgba(255, 255, 255, 0.9);
             font-size: 1rem;
             color: var(--dark);
+            border: 1px solid #e2e8f0;
         }
         
         .input-row {
@@ -190,12 +217,8 @@
             justify-content: center;
         }
         
-        .calculate-btn i {
-            margin-right: 10px;
-        }
-        
         .calculate-btn:hover {
-            background: #d62828;
+            background: #0da271;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
@@ -206,13 +229,13 @@
             padding: 20px;
             margin-top: 20px;
             text-align: center;
-            border-left: 4px solid var(--accent2);
+            border-left: 4px solid var(--accent);
         }
         
         .result-title {
             font-size: 1.2rem;
             margin-bottom: 10px;
-            color: #a8dadc;
+            color: #94a3b8;
         }
         
         .result-value {
@@ -220,13 +243,16 @@
             font-weight: bold;
             color: white;
             margin: 10px 0;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .result-description {
             margin-top: 10px;
-            font-style: italic;
             opacity: 0.8;
-            color: #a8dadc;
+            color: #cbd5e1;
+            font-size: 1rem;
         }
         
         .calculator-info {
@@ -235,12 +261,12 @@
             background: rgba(255, 255, 255, 0.06);
             border-radius: 10px;
             font-size: 0.9rem;
-            color: #a8dadc;
+            color: #94a3b8;
         }
         
         .calculator-info h3 {
             margin-bottom: 10px;
-            color: #a8dadc;
+            color: var(--accent);
         }
         
         footer {
@@ -258,11 +284,11 @@
             border-radius: 8px;
             margin-top: 20px;
             text-align: center;
-            color: #a8dadc;
+            color: #94a3b8;
         }
         
         .deploy-note a {
-            color: var(--accent2);
+            color: var(--accent);
             text-decoration: none;
             font-weight: bold;
         }
@@ -281,6 +307,10 @@
                 justify-content: flex-start;
                 padding-bottom: 15px;
             }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
         }
         
         @media (max-width: 500px) {
@@ -290,24 +320,68 @@
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .subtitle {
                 font-size: 1rem;
             }
+            
+            .calculator-card {
+                padding: 20px;
+            }
+        }
+        
+        .search-container {
+            margin: 20px auto;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        #search-calculators {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1rem;
+            padding-left: 45px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo">
-                <i class="fas fa-calculator"></i>
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-calculator"></i>
+                </div>
             </div>
-            <h1>Calculator Hub</h1>
-            <p class="subtitle">Your one-stop solution for all calculation needs. Select from a variety of specialized calculators below.</p>
+            <h1>Ultimate Calculator Hub</h1>
+            <p class="subtitle">Your comprehensive solution for all calculation needs. 19 specialized calculators in one place.</p>
         </header>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="search-calculators" placeholder="Search for calculators...">
+        </div>
         
         <div class="tabs-container">
             <div class="tab active" data-category="all">
@@ -315,6 +389,9 @@
             </div>
             <div class="tab" data-category="education">
                 <i class="fas fa-graduation-cap"></i> Education
+            </div>
+            <div class="tab" data-category="finance">
+                <i class="fas fa-coins"></i> Finance
             </div>
             <div class="tab" data-category="health">
                 <i class="fas fa-heartbeat"></i> Health
@@ -330,28 +407,28 @@
             </div>
         </div>
         
-        <div class="calculator-grid">
+        <div class="calculator-grid" id="calculator-container">
             <!-- ACT Score Calculator -->
-            <div class="calculator-card" data-categories="education">
+            <div class="calculator-card" data-categories="education" data-name="act score">
                 <h2 class="calculator-title"><i class="fas fa-pencil-alt"></i> ACT Score Calculator</h2>
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="english">English Score</label>
-                        <input type="number" id="english" min="1" max="36" placeholder="1-36" value="24">
+                        <label for="english">English Score (1-36)</label>
+                        <input type="number" id="english" min="1" max="36" value="24">
                     </div>
                     <div class="input-group">
-                        <label for="math">Math Score</label>
-                        <input type="number" id="math" min="1" max="36" placeholder="1-36" value="26">
+                        <label for="math">Math Score (1-36)</label>
+                        <input type="number" id="math" min="1" max="36" value="26">
                     </div>
                 </div>
                 <div class="input-row">
                     <div class="input-group">
-                        <label for="reading">Reading Score</label>
-                        <input type="number" id="reading" min="1" max="36" placeholder="1-36" value="28">
+                        <label for="reading">Reading Score (1-36)</label>
+                        <input type="number" id="reading" min="1" max="36" value="28">
                     </div>
                     <div class="input-group">
-                        <label for="science">Science Score</label>
-                        <input type="number" id="science" min="1" max="36" placeholder="1-36" value="25">
+                        <label for="science">Science Score (1-36)</label>
+                        <input type="number" id="science" min="1" max="36" value="25">
                     </div>
                 </div>
                 <button class="calculate-btn" onclick="calculateACT()">
@@ -365,15 +442,15 @@
             </div>
             
             <!-- AP Biology Score Calculator -->
-            <div class="calculator-card" data-categories="education">
+            <div class="calculator-card" data-categories="education" data-name="ap biology">
                 <h2 class="calculator-title"><i class="fas fa-dna"></i> AP Biology Score Calculator</h2>
                 <div class="input-group">
-                    <label for="mcq">Multiple Choice Raw Score</label>
-                    <input type="number" id="mcq" min="0" max="60" placeholder="0-60" value="42">
+                    <label for="mcq">Multiple Choice Raw Score (0-60)</label>
+                    <input type="number" id="mcq" min="0" max="60" value="42">
                 </div>
                 <div class="input-group">
-                    <label for="frq">Free Response Raw Score</label>
-                    <input type="number" id="frq" min="0" max="30" placeholder="0-30" value="22">
+                    <label for="frq">Free Response Raw Score (0-30)</label>
+                    <input type="number" id="frq" min="0" max="30" value="22">
                 </div>
                 <button class="calculate-btn" onclick="calculateAPBio()">
                     <i class="fas fa-calculator"></i> Calculate AP Score
@@ -386,15 +463,15 @@
             </div>
             
             <!-- AP Chemistry Score Calculator -->
-            <div class="calculator-card" data-categories="education">
+            <div class="calculator-card" data-categories="education" data-name="ap chemistry">
                 <h2 class="calculator-title"><i class="fas fa-flask"></i> AP Chemistry Score Calculator</h2>
                 <div class="input-group">
-                    <label for="apchem-mcq">Multiple Choice Raw Score</label>
-                    <input type="number" id="apchem-mcq" min="0" max="60" placeholder="0-60" value="40">
+                    <label for="apchem-mcq">Multiple Choice Raw Score (0-60)</label>
+                    <input type="number" id="apchem-mcq" min="0" max="60" value="40">
                 </div>
                 <div class="input-group">
-                    <label for="apchem-frq">Free Response Raw Score</label>
-                    <input type="number" id="apchem-frq" min="0" max="40" placeholder="0-40" value="25">
+                    <label for="apchem-frq">Free Response Raw Score (0-40)</label>
+                    <input type="number" id="apchem-frq" min="0" max="40" value="25">
                 </div>
                 <button class="calculate-btn" onclick="calculateAPChem()">
                     <i class="fas fa-calculator"></i> Calculate AP Score
@@ -407,7 +484,7 @@
             </div>
             
             <!-- Blooket Calculator -->
-            <div class="calculator-card" data-categories="games">
+            <div class="calculator-card" data-categories="games" data-name="blooket">
                 <h2 class="calculator-title"><i class="fas fa-gamepad"></i> Blooket Calculator</h2>
                 <div class="input-group">
                     <label for="blooket-points">Points per Question</label>
@@ -437,7 +514,7 @@
             </div>
             
             <!-- Prostate Volume Calculator -->
-            <div class="calculator-card" data-categories="health">
+            <div class="calculator-card" data-categories="health" data-name="prostate volume">
                 <h2 class="calculator-title"><i class="fas fa-heartbeat"></i> Prostate Volume Calculator</h2>
                 <div class="input-row">
                     <div class="input-group">
@@ -464,7 +541,7 @@
             </div>
             
             <!-- Dunk Calculator -->
-            <div class="calculator-card" data-categories="sports">
+            <div class="calculator-card" data-categories="sports" data-name="dunk">
                 <h2 class="calculator-title"><i class="fas fa-basketball-ball"></i> Dunk Calculator</h2>
                 <div class="input-group">
                     <label for="dunk-height">Your Height (cm)</label>
@@ -489,7 +566,7 @@
             </div>
             
             <!-- Persona 3 Fusion Calculator -->
-            <div class="calculator-card" data-categories="games">
+            <div class="calculator-card" data-categories="games" data-name="persona fusion">
                 <h2 class="calculator-title"><i class="fas fa-mask"></i> Persona 3 Fusion Calculator</h2>
                 <div class="input-row">
                     <div class="input-group">
@@ -524,7 +601,7 @@
             </div>
             
             <!-- Schedule 1 Mixing Calculator -->
-            <div class="calculator-card" data-categories="other">
+            <div class="calculator-card" data-categories="other" data-name="schedule mixing">
                 <h2 class="calculator-title"><i class="fas fa-vial"></i> Schedule 1 Mixing Calculator</h2>
                 <div class="input-group">
                     <label for="substance1">Substance 1 (grams)</label>
@@ -549,7 +626,7 @@
             </div>
             
             <!-- Snowday Calculator -->
-            <div class="calculator-card" data-categories="other">
+            <div class="calculator-card" data-categories="other" data-name="snowday">
                 <h2 class="calculator-title"><i class="fas fa-snowflake"></i> Snowday Calculator</h2>
                 <div class="input-group">
                     <label for="snowfall">Snowfall Amount (inches)</label>
@@ -574,7 +651,7 @@
             </div>
             
             <!-- VDOT Calculator -->
-            <div class="calculator-card" data-categories="sports">
+            <div class="calculator-card" data-categories="sports" data-name="vdot">
                 <h2 class="calculator-title"><i class="fas fa-running"></i> VDOT Running Calculator</h2>
                 <div class="input-group">
                     <label for="distance">Distance</label>
@@ -608,18 +685,292 @@
                     <div class="result-description" id="vdot-description"></div>
                 </div>
             </div>
+            
+            <!-- Mortgage Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="mortgage">
+                <h2 class="calculator-title"><i class="fas fa-home"></i> Mortgage Calculator</h2>
+                <div class="input-group">
+                    <label for="loan-amount">Loan Amount ($)</label>
+                    <input type="number" id="loan-amount" min="1000" value="300000" step="1000">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="interest-rate">Interest Rate (%)</label>
+                        <input type="number" id="interest-rate" min="0.1" max="20" value="4.5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="loan-term">Loan Term (years)</label>
+                        <input type="number" id="loan-term" min="1" max="40" value="30">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateMortgage()">
+                    <i class="fas fa-calculator"></i> Calculate Mortgage
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Monthly Payment</div>
+                    <div class="result-value" id="mortgage-result">-</div>
+                    <div class="result-description" id="mortgage-description"></div>
+                </div>
+            </div>
+            
+            <!-- Loan Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="loan">
+                <h2 class="calculator-title"><i class="fas fa-hand-holding-usd"></i> Loan Calculator</h2>
+                <div class="input-group">
+                    <label for="personal-loan-amount">Loan Amount ($)</label>
+                    <input type="number" id="personal-loan-amount" min="100" value="10000">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="personal-interest">Interest Rate (%)</label>
+                        <input type="number" id="personal-interest" min="1" max="30" value="7.5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="personal-term">Term (months)</label>
+                        <input type="number" id="personal-term" min="1" max="120" value="36">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateLoan()">
+                    <i class="fas fa-calculator"></i> Calculate Loan
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Monthly Payment</div>
+                    <div class="result-value" id="loan-result">-</div>
+                    <div class="result-description" id="loan-description"></div>
+                </div>
+            </div>
+            
+            <!-- Auto Loan Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="auto loan">
+                <h2 class="calculator-title"><i class="fas fa-car"></i> Auto Loan Calculator</h2>
+                <div class="input-group">
+                    <label for="vehicle-price">Vehicle Price ($)</label>
+                    <input type="number" id="vehicle-price" min="1000" value="25000">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="down-payment">Down Payment ($)</label>
+                        <input type="number" id="down-payment" min="0" value="5000">
+                    </div>
+                    <div class="input-group">
+                        <label for="trade-in">Trade-in Value ($)</label>
+                        <input type="number" id="trade-in" min="0" value="2000">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="auto-interest">Interest Rate (%)</label>
+                        <input type="number" id="auto-interest" min="0.1" max="20" value="5.5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="auto-term">Loan Term (months)</label>
+                        <input type="number" id="auto-term" min="12" max="84" value="60">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateAutoLoan()">
+                    <i class="fas fa-calculator"></i> Calculate Auto Loan
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Monthly Payment</div>
+                    <div class="result-value" id="auto-loan-result">-</div>
+                    <div class="result-description" id="auto-loan-description"></div>
+                </div>
+            </div>
+            
+            <!-- Interest Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="interest">
+                <h2 class="calculator-title"><i class="fas fa-percentage"></i> Interest Calculator</h2>
+                <div class="input-group">
+                    <label for="principal">Principal Amount ($)</label>
+                    <input type="number" id="principal" min="1" value="10000">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="interest-rate-savings">Interest Rate (%)</label>
+                        <input type="number" id="interest-rate-savings" min="0.01" max="20" value="4.5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="time-period">Time Period (years)</label>
+                        <input type="number" id="time-period" min="1" max="50" value="10">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="compounding">Compounding Frequency</label>
+                    <select id="compounding">
+                        <option value="1">Annually</option>
+                        <option value="2">Semi-Annually</option>
+                        <option value="4">Quarterly</option>
+                        <option value="12" selected>Monthly</option>
+                        <option value="365">Daily</option>
+                    </select>
+                </div>
+                <button class="calculate-btn" onclick="calculateInterest()">
+                    <i class="fas fa-calculator"></i> Calculate Interest
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Future Value</div>
+                    <div class="result-value" id="interest-result">-</div>
+                    <div class="result-description" id="interest-description"></div>
+                </div>
+            </div>
+            
+            <!-- Payment Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="payment">
+                <h2 class="calculator-title"><i class="fas fa-credit-card"></i> Payment Calculator</h2>
+                <div class="input-group">
+                    <label for="payment-amount">Total Amount ($)</label>
+                    <input type="number" id="payment-amount" min="1" value="1200">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="payment-count">Number of Payments</label>
+                        <input type="number" id="payment-count" min="1" max="120" value="12">
+                    </div>
+                    <div class="input-group">
+                        <label for="payment-interest">Interest Rate (%)</label>
+                        <input type="number" id="payment-interest" min="0" max="30" value="0" step="0.1">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculatePayments()">
+                    <i class="fas fa-calculator"></i> Calculate Payments
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Payment Amount</div>
+                    <div class="result-value" id="payment-result">-</div>
+                    <div class="result-description" id="payment-description"></div>
+                </div>
+            </div>
+            
+            <!-- Retirement Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="retirement">
+                <h2 class="calculator-title"><i class="fas fa-umbrella-beach"></i> Retirement Calculator</h2>
+                <div class="input-group">
+                    <label for="current-age">Current Age</label>
+                    <input type="number" id="current-age" min="18" max="70" value="35">
+                </div>
+                <div class="input-group">
+                    <label for="retirement-age">Retirement Age</label>
+                    <input type="number" id="retirement-age" min="55" max="90" value="65">
+                </div>
+                <div class="input-group">
+                    <label for="current-savings">Current Savings ($)</label>
+                    <input type="number" id="current-savings" min="0" value="50000">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="monthly-contribution">Monthly Contribution ($)</label>
+                        <input type="number" id="monthly-contribution" min="0" value="500">
+                    </div>
+                    <div class="input-group">
+                        <label for="retirement-return">Expected Return (%)</label>
+                        <input type="number" id="retirement-return" min="1" max="15" value="6">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateRetirement()">
+                    <i class="fas fa-calculator"></i> Calculate Retirement
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Retirement Savings</div>
+                    <div class="result-value" id="retirement-result">-</div>
+                    <div class="result-description" id="retirement-description"></div>
+                </div>
+            </div>
+            
+            <!-- Amortization Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="amortization">
+                <h2 class="calculator-title"><i class="fas fa-table"></i> Amortization Calculator</h2>
+                <div class="input-group">
+                    <label for="amort-amount">Loan Amount ($)</label>
+                    <input type="number" id="amort-amount" min="1000" value="200000">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="amort-interest">Interest Rate (%)</label>
+                        <input type="number" id="amort-interest" min="0.1" max="20" value="5.25" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="amort-term">Loan Term (years)</label>
+                        <input type="number" id="amort-term" min="1" max="40" value="30">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateAmortization()">
+                    <i class="fas fa-calculator"></i> Calculate Amortization
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Total Interest Paid</div>
+                    <div class="result-value" id="amort-result">-</div>
+                    <div class="result-description" id="amort-description"></div>
+                </div>
+            </div>
+            
+            <!-- Investment Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="investment">
+                <h2 class="calculator-title"><i class="fas fa-chart-line"></i> Investment Calculator</h2>
+                <div class="input-group">
+                    <label for="initial-investment">Initial Investment ($)</label>
+                    <input type="number" id="initial-investment" min="0" value="10000">
+                </div>
+                <div class="input-group">
+                    <label for="monthly-investment">Monthly Contribution ($)</label>
+                    <input type="number" id="monthly-investment" min="0" value="200">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="investment-years">Investment Period (years)</label>
+                        <input type="number" id="investment-years" min="1" max="50" value="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="investment-return">Expected Return (%)</label>
+                        <input type="number" id="investment-return" min="1" max="20" value="7">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateInvestment()">
+                    <i class="fas fa-calculator"></i> Calculate Investment
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Future Value</div>
+                    <div class="result-value" id="investment-result">-</div>
+                    <div class="result-description" id="investment-description"></div>
+                </div>
+            </div>
+            
+            <!-- Inflation Calculator -->
+            <div class="calculator-card" data-categories="finance" data-name="inflation">
+                <h2 class="calculator-title"><i class="fas fa-money-bill-wave"></i> Inflation Calculator</h2>
+                <div class="input-group">
+                    <label for="current-value">Current Value ($)</label>
+                    <input type="number" id="current-value" min="1" value="1000">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="inflation-rate">Inflation Rate (%)</label>
+                        <input type="number" id="inflation-rate" min="0.1" max="20" value="3.5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="inflation-years">Years</label>
+                        <input type="number" id="inflation-years" min="1" max="100" value="10">
+                    </div>
+                </div>
+                <button class="calculate-btn" onclick="calculateInflation()">
+                    <i class="fas fa-calculator"></i> Calculate Future Value
+                </button>
+                <div class="result-container">
+                    <div class="result-title">Future Value</div>
+                    <div class="result-value" id="inflation-result">-</div>
+                    <div class="result-description" id="inflation-description"></div>
+                </div>
+            </div>
         </div>
         
         <div class="deploy-note">
-            <h3>Deploy this on Vercel</h3>
-            <p>This website is ready for deployment on Vercel. Simply create a new project and push this HTML file to your repository.</p>
-            <p>Vercel will automatically detect it as a static site and deploy it.</p>
+            <h3>Ready for Vercel Deployment</h3>
+            <p>This comprehensive calculator hub is ready to deploy on Vercel. Simply create a new project and push this HTML file to your repository.</p>
             <p>Get started at <a href="https://vercel.com" target="_blank">vercel.com</a></p>
         </div>
         
         <footer>
-            <p>Calculator Hub &copy; 2023 | All calculators are for educational purposes only</p>
-            <p>Results may vary and should be verified with official sources</p>
+            <p>Ultimate Calculator Hub &copy; 2023 | All calculators are for educational purposes only</p>
+            <p>Results should be verified with official sources or professionals</p>
         </footer>
     </div>
 
@@ -627,7 +978,10 @@
         // Calculator selection
         const tabs = document.querySelectorAll('.tab');
         const calculatorCards = document.querySelectorAll('.calculator-card');
+        const searchInput = document.getElementById('search-calculators');
+        const calculatorContainer = document.getElementById('calculator-container');
         
+        // Filter calculators by category
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 // Remove active class from all tabs
@@ -636,22 +990,57 @@
                 tab.classList.add('active');
                 
                 const category = tab.getAttribute('data-category');
-                
-                // Show/hide calculators based on category
-                calculatorCards.forEach(card => {
-                    if (category === 'all') {
-                        card.style.display = 'block';
-                    } else {
-                        const categories = card.getAttribute('data-categories');
-                        if (categories.includes(category)) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    }
-                });
+                filterCalculators(category);
             });
         });
+        
+        // Search functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            filterCalculators('all', searchTerm);
+        });
+        
+        function filterCalculators(category, searchTerm = '') {
+            let hasVisibleCards = false;
+            
+            calculatorCards.forEach(card => {
+                const categories = card.getAttribute('data-categories');
+                const name = card.getAttribute('data-name').toLowerCase();
+                
+                const matchesCategory = category === 'all' || categories.includes(category);
+                const matchesSearch = !searchTerm || name.includes(searchTerm);
+                
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'block';
+                    hasVisibleCards = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show no results message if needed
+            const noResults = document.querySelector('.no-results');
+            if (noResults) noResults.remove();
+            
+            if (!hasVisibleCards) {
+                const noResultsElement = document.createElement('div');
+                noResultsElement.className = 'no-results';
+                noResultsElement.innerHTML = `<i class="fas fa-search fa-2x" style="margin-bottom: 15px;"></i><h3>No calculators found</h3><p>Try a different search term or category</p>`;
+                calculatorContainer.appendChild(noResultsElement);
+            }
+        }
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(amount);
+        }
+        
+        // ------------ ORIGINAL CALCULATORS ------------
         
         // ACT Calculator
         function calculateACT() {
@@ -994,8 +1383,229 @@
             document.getElementById('vdot-description').textContent = description;
         }
         
+        // ------------ FINANCE CALCULATORS ------------
+        
+        // Mortgage Calculator
+        function calculateMortgage() {
+            const loanAmount = parseFloat(document.getElementById('loan-amount').value) || 0;
+            const interestRate = parseFloat(document.getElementById('interest-rate').value) || 0;
+            const loanTerm = parseFloat(document.getElementById('loan-term').value) || 0;
+            
+            if (loanAmount <= 0 || interestRate <= 0 || loanTerm <= 0) {
+                document.getElementById('mortgage-result').textContent = 'Invalid';
+                document.getElementById('mortgage-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            const monthlyRate = interestRate / 100 / 12;
+            const payments = loanTerm * 12;
+            const x = Math.pow(1 + monthlyRate, payments);
+            const monthly = (loanAmount * x * monthlyRate) / (x - 1);
+            
+            document.getElementById('mortgage-result').textContent = formatCurrency(monthly);
+            document.getElementById('mortgage-description').textContent = `For a ${loanTerm}-year loan at ${interestRate}% interest`;
+        }
+        
+        // Loan Calculator
+        function calculateLoan() {
+            const loanAmount = parseFloat(document.getElementById('personal-loan-amount').value) || 0;
+            const interestRate = parseFloat(document.getElementById('personal-interest').value) || 0;
+            const loanTerm = parseFloat(document.getElementById('personal-term').value) || 0;
+            
+            if (loanAmount <= 0 || interestRate <= 0 || loanTerm <= 0) {
+                document.getElementById('loan-result').textContent = 'Invalid';
+                document.getElementById('loan-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            const monthlyRate = interestRate / 100 / 12;
+            const x = Math.pow(1 + monthlyRate, loanTerm);
+            const monthly = (loanAmount * x * monthlyRate) / (x - 1);
+            
+            document.getElementById('loan-result').textContent = formatCurrency(monthly);
+            document.getElementById('loan-description').textContent = `Total payments: ${formatCurrency(monthly * loanTerm)}`;
+        }
+        
+        // Auto Loan Calculator
+        function calculateAutoLoan() {
+            const vehiclePrice = parseFloat(document.getElementById('vehicle-price').value) || 0;
+            const downPayment = parseFloat(document.getElementById('down-payment').value) || 0;
+            const tradeIn = parseFloat(document.getElementById('trade-in').value) || 0;
+            const interestRate = parseFloat(document.getElementById('auto-interest').value) || 0;
+            const loanTerm = parseFloat(document.getElementById('auto-term').value) || 0;
+            
+            const loanAmount = vehiclePrice - downPayment - tradeIn;
+            
+            if (loanAmount <= 0 || interestRate <= 0 || loanTerm <= 0) {
+                document.getElementById('auto-loan-result').textContent = 'Invalid';
+                document.getElementById('auto-loan-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            const monthlyRate = interestRate / 100 / 12;
+            const x = Math.pow(1 + monthlyRate, loanTerm);
+            const monthly = (loanAmount * x * monthlyRate) / (x - 1);
+            
+            document.getElementById('auto-loan-result').textContent = formatCurrency(monthly);
+            document.getElementById('auto-loan-description').textContent = `Financing ${formatCurrency(loanAmount)} over ${loanTerm} months`;
+        }
+        
+        // Interest Calculator
+        function calculateInterest() {
+            const principal = parseFloat(document.getElementById('principal').value) || 0;
+            const interestRate = parseFloat(document.getElementById('interest-rate-savings').value) || 0;
+            const timePeriod = parseFloat(document.getElementById('time-period').value) || 0;
+            const compounding = parseFloat(document.getElementById('compounding').value) || 1;
+            
+            if (principal <= 0 || interestRate <= 0 || timePeriod <= 0) {
+                document.getElementById('interest-result').textContent = 'Invalid';
+                document.getElementById('interest-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            const n = compounding;
+            const r = interestRate / 100;
+            const t = timePeriod;
+            const amount = principal * Math.pow(1 + r / n, n * t);
+            const interestEarned = amount - principal;
+            
+            document.getElementById('interest-result').textContent = formatCurrency(amount);
+            document.getElementById('interest-description').textContent = `Earned ${formatCurrency(interestEarned)} in interest`;
+        }
+        
+        // Payment Calculator
+        function calculatePayments() {
+            const amount = parseFloat(document.getElementById('payment-amount').value) || 0;
+            const payments = parseFloat(document.getElementById('payment-count').value) || 0;
+            const interestRate = parseFloat(document.getElementById('payment-interest').value) || 0;
+            
+            if (amount <= 0 || payments <= 0) {
+                document.getElementById('payment-result').textContent = 'Invalid';
+                document.getElementById('payment-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            let payment;
+            if (interestRate > 0) {
+                const monthlyRate = interestRate / 100 / 12;
+                const x = Math.pow(1 + monthlyRate, payments);
+                payment = (amount * monthlyRate * x) / (x - 1);
+            } else {
+                payment = amount / payments;
+            }
+            
+            document.getElementById('payment-result').textContent = formatCurrency(payment);
+            document.getElementById('payment-description').textContent = `Total of ${payments} payments`;
+        }
+        
+        // Retirement Calculator
+        function calculateRetirement() {
+            const currentAge = parseFloat(document.getElementById('current-age').value) || 0;
+            const retirementAge = parseFloat(document.getElementById('retirement-age').value) || 0;
+            const currentSavings = parseFloat(document.getElementById('current-savings').value) || 0;
+            const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value) || 0;
+            const expectedReturn = parseFloat(document.getElementById('retirement-return').value) || 0;
+            
+            if (currentAge <= 0 || retirementAge <= currentAge || expectedReturn <= 0) {
+                document.getElementById('retirement-result').textContent = 'Invalid';
+                document.getElementById('retirement-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            const years = retirementAge - currentAge;
+            const months = years * 12;
+            const monthlyRate = expectedReturn / 100 / 12;
+            
+            // Calculate future value of current savings
+            let futureValue = currentSavings * Math.pow(1 + monthlyRate, months);
+            
+            // Calculate future value of monthly contributions
+            for (let i = 0; i < months; i++) {
+                futureValue += monthlyContribution * Math.pow(1 + monthlyRate, i);
+            }
+            
+            const totalContributions = currentSavings + (monthlyContribution * months);
+            
+            document.getElementById('retirement-result').textContent = formatCurrency(futureValue);
+            document.getElementById('retirement-description').textContent = `Total contributions: ${formatCurrency(totalContributions)}`;
+        }
+        
+        // Amortization Calculator
+        function calculateAmortization() {
+            const loanAmount = parseFloat(document.getElementById('amort-amount').value) || 0;
+            const interestRate = parseFloat(document.getElementById('amort-interest').value) || 0;
+            const loanTerm = parseFloat(document.getElementById('amort-term').value) || 0;
+            
+            if (loanAmount <= 0 || interestRate <= 0 || loanTerm <= 0) {
+                document.getElementById('amort-result').textContent = 'Invalid';
+                document.getElementById('amort-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            const monthlyRate = interestRate / 100 / 12;
+            const payments = loanTerm * 12;
+            const x = Math.pow(1 + monthlyRate, payments);
+            const monthly = (loanAmount * x * monthlyRate) / (x - 1);
+            
+            const totalInterest = (monthly * payments) - loanAmount;
+            
+            document.getElementById('amort-result').textContent = formatCurrency(totalInterest);
+            document.getElementById('amort-description').textContent = `Total payment: ${formatCurrency(monthly * payments)}`;
+        }
+        
+        // Investment Calculator
+        function calculateInvestment() {
+            const initial = parseFloat(document.getElementById('initial-investment').value) || 0;
+            const monthly = parseFloat(document.getElementById('monthly-investment').value) || 0;
+            const years = parseFloat(document.getElementById('investment-years').value) || 0;
+            const expectedReturn = parseFloat(document.getElementById('investment-return').value) || 0;
+            
+            if (years <= 0 || expectedReturn <= 0) {
+                document.getElementById('investment-result').textContent = 'Invalid';
+                document.getElementById('investment-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            const months = years * 12;
+            const monthlyRate = expectedReturn / 100 / 12;
+            
+            // Calculate future value of initial investment
+            let futureValue = initial * Math.pow(1 + monthlyRate, months);
+            
+            // Calculate future value of monthly contributions
+            for (let i = 0; i < months; i++) {
+                futureValue += monthly * Math.pow(1 + monthlyRate, i);
+            }
+            
+            const totalContributions = initial + (monthly * months);
+            const interestEarned = futureValue - totalContributions;
+            
+            document.getElementById('investment-result').textContent = formatCurrency(futureValue);
+            document.getElementById('investment-description').textContent = `Total contributions: ${formatCurrency(totalContributions)} | Interest earned: ${formatCurrency(interestEarned)}`;
+        }
+        
+        // Inflation Calculator
+        function calculateInflation() {
+            const currentValue = parseFloat(document.getElementById('current-value').value) || 0;
+            const inflationRate = parseFloat(document.getElementById('inflation-rate').value) || 0;
+            const years = parseFloat(document.getElementById('inflation-years').value) || 0;
+            
+            if (currentValue <= 0 || inflationRate <= 0 || years <= 0) {
+                document.getElementById('inflation-result').textContent = 'Invalid';
+                document.getElementById('inflation-description').textContent = 'Please enter valid values';
+                return;
+            }
+            
+            const futureValue = currentValue / Math.pow(1 + (inflationRate / 100), years);
+            const loss = currentValue - futureValue;
+            
+            document.getElementById('inflation-result').textContent = formatCurrency(futureValue);
+            document.getElementById('inflation-description').textContent = `Equivalent to ${formatCurrency(currentValue)} today (loss of ${formatCurrency(loss)})`;
+        }
+        
         // Initialize with default calculations
         window.onload = function() {
+            // Original calculators
             calculateACT();
             calculateAPBio();
             calculateAPChem();
@@ -1006,6 +1616,17 @@
             calculateSchedule();
             calculateSnowday();
             calculateVDOT();
+            
+            // Finance calculators
+            calculateMortgage();
+            calculateLoan();
+            calculateAutoLoan();
+            calculateInterest();
+            calculatePayments();
+            calculateRetirement();
+            calculateAmortization();
+            calculateInvestment();
+            calculateInflation();
         };
     </script>
 </body>
